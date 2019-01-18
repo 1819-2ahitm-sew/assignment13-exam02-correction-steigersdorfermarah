@@ -32,6 +32,10 @@ public class Main {
    */
   public static void main(String[] args) {
 
+    erstelleKonten(KONTENDATEI);
+    fuehreBuchungenDurch(BUCHUNGSDATEI);
+    schreibeKontostandInDatei(ERGEBNISDATEI);
+
   }
 
   /**
@@ -46,7 +50,32 @@ public class Main {
    */
   private static void erstelleKonten(String datei) {
 
-        System.out.println("erstelleKonten noch nicht implementiert");
+    try (Scanner scanner = new Scanner(new FileReader(datei))){
+      while (scanner.hasNextLine()){
+        String line = scanner.nextLine();
+        String [] array = line.split(";");
+        String konto = array[0];
+        String name = array[1];
+        double anfangsBestand = Double.parseDouble(array[2]);
+
+
+        switch (konto){
+          case "Sparkonto":
+            SparKonto sparKonto = new SparKonto(name, anfangsBestand, ZINSSATZ);
+            break;
+
+          case "Girokonto":
+            GiroKonto giroKonto = new GiroKonto(name, anfangsBestand, ZINSSATZ);
+            break;
+        }
+      }
+      System.out.println("Erstellung der Konten beendet.");
+
+    } catch (FileNotFoundException e) {
+      System.err.println(e.getMessage());
+    }
+
+
   }
 
   /**
