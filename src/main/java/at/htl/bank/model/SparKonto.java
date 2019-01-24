@@ -11,11 +11,11 @@ public class SparKonto extends BankKonto{
 
     public SparKonto(String name, double anfangsbestand, double zinsSatz) {
         super(name, anfangsbestand);
-        this.zinsSatz = zinsSatz;
     }
 
     public void zinsenAnrechnung(){
         kontoStand = kontoStand * zinsSatz;
+        kontoStand = kontoStand + (kontoStand * zinsSatz);
     }
 
 }
